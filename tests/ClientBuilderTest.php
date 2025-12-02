@@ -96,9 +96,13 @@ final class ClientBuilderTest extends TestCase
     {
         $property = new \ReflectionProperty(Client::class, 'transport');
 
-        $property->setAccessible(true);
+        if (\PHP_VERSION_ID < 80100) {
+            $property->setAccessible(true);
+        }
         $value = $property->getValue($client);
-        $property->setAccessible(false);
+        if (\PHP_VERSION_ID < 80100) {
+            $property->setAccessible(false);
+        }
 
         return $value;
     }
